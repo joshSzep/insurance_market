@@ -1,8 +1,7 @@
 """Type stubs for channels.generic.websocket package."""
 
+from collections.abc import Callable
 from typing import Any
-from typing import Callable
-from typing import ClassVar
 from typing import TypeVar
 
 T = TypeVar("T", bound="AsyncJsonWebsocketConsumer")

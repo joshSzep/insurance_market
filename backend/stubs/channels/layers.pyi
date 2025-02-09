@@ -1,6 +1,5 @@
 """Type stubs for channels.layers package."""
 
-from typing import Any
 
 from channels import ChannelLayer
 

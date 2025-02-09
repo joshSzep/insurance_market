@@ -1,7 +1,6 @@
 """Type stubs for channels.routing package."""
 
 from typing import Any
-from typing import Callable
 
 class ProtocolTypeRouter:
     """Router for different protocols."""
