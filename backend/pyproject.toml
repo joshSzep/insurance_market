@@ -81,10 +81,9 @@ reportUnusedImport = true
 reportUnusedVariable = true
 stubPath = "stubs"
 extraPaths = ["src"]
-typeCheckingMode = "basic"
+typeCheckingMode = "standard"
 venvPath = ".venv"
 venvName = ".venv"
-ignore = ["**/channels/**"]
 
 [tool.django-stubs]
 django_settings_module = "project.settings"
