@@ -1,3 +1,4 @@
+from datetime import timedelta
 from decimal import Decimal
 
 import pytest
@@ -11,7 +12,7 @@ from marketplace.models.bid import BidStatus
 @pytest.mark.django_db
 def test_bid_creation(sample_bid: Bid) -> None:
     """Test basic bid creation."""
-    assert sample_bid.id is not None
+    assert sample_bid.pk is not None
     assert sample_bid.status == BidStatus.ACTIVE.value
     assert sample_bid.carrier_name == "Best Insurance Co"
     assert sample_bid.amount == Decimal("1000.00")
@@ -20,7 +21,7 @@ def test_bid_creation(sample_bid: Bid) -> None:
 @pytest.mark.django_db
 def test_bid_str_representation(sample_bid: Bid) -> None:
     """Test the string representation of a bid."""
-    expected = f"Bid {sample_bid.id} - Best Insurance Co - $1000.00 - active"
+    expected = f"Bid {sample_bid.pk} - Best Insurance Co - $1000.00 - active"
     assert str(sample_bid) == expected
 
 
@@ -58,7 +59,7 @@ def test_confirm_bid_fails_if_not_selected(sample_bid: Bid) -> None:
 def test_confirm_bid_fails_if_expired(selected_bid: Bid) -> None:
     """Test that confirming an expired bid fails."""
     # Move confirmation deadline to the past
-    selected_bid.confirmation_deadline = timezone.now() - timezone.timedelta(seconds=1)
+    selected_bid.confirmation_deadline = timezone.now() - timedelta(seconds=1)
 
     with pytest.raises(ValueError, match="Confirmation deadline has passed"):
         selected_bid.confirm()
@@ -77,7 +78,7 @@ def test_is_confirmation_expired(selected_bid: Bid) -> None:
     assert selected_bid.is_confirmation_expired() is False
 
     # Move deadline to the past
-    selected_bid.confirmation_deadline = timezone.now() - timezone.timedelta(seconds=1)
+    selected_bid.confirmation_deadline = timezone.now() - timedelta(seconds=1)
     assert selected_bid.is_confirmation_expired() is True
 
 

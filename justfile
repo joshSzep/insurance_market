@@ -4,7 +4,7 @@ default:
 
 # Install backend dependencies using uv
 install-backend:
-    cd backend && uv pip sync --all-extras --all-groups --all-packages --upgrade
+    cd backend && uv sync --all-extras --all-groups --all-packages --upgrade
 
 # Install frontend dependencies
 install-frontend:
@@ -102,3 +102,7 @@ clean: clean-backend clean-frontend
 
 # Check all (format, lint, typecheck, test)
 check: fmt lint typecheck test
+
+# Run pre-commit hooks on all files
+pre-commit:
+    cd backend && uv run pre-commit run --all-files

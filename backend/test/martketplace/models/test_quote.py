@@ -1,3 +1,4 @@
+from datetime import timedelta
 from decimal import Decimal
 
 import pytest
@@ -10,7 +11,7 @@ from marketplace.models.quote import QuoteStatus
 @pytest.mark.django_db
 def test_quote_creation(sample_quote: Quote) -> None:
     """Test basic quote creation."""
-    assert sample_quote.id is not None
+    assert sample_quote.pk is not None
     assert sample_quote.status == QuoteStatus.PENDING.value
     assert sample_quote.consumer_name == "John Doe"
     assert sample_quote.coverage_amount == Decimal("50000.00")
@@ -48,7 +49,7 @@ def test_can_retry_after_one_hour(sample_quote: Quote) -> None:
     assert retry.can_retry() is False
 
     # Move time forward one hour
-    retry.last_retry_at = timezone.now() - timezone.timedelta(hours=1, minutes=1)
+    retry.last_retry_at = timezone.now() - timedelta(hours=1, minutes=1)
     assert retry.can_retry() is False  # Still false because retry_count >= 1
 
 
@@ -57,7 +58,7 @@ def test_create_retry_preserves_data(sample_quote: Quote) -> None:
     """Test that retry preserves original quote data."""
     retry = sample_quote.create_retry()
 
-    assert retry.id != sample_quote.id
+    assert retry.pk != sample_quote.pk
     assert retry.consumer_name == sample_quote.consumer_name
     assert retry.consumer_email == sample_quote.consumer_email
     assert retry.coverage_amount == sample_quote.coverage_amount

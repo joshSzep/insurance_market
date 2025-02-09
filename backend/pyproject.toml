@@ -7,8 +7,8 @@ authors = [{ name = "Joshua Szepietowski", email = "joshSzep@gmail.com" }]
 requires-python = ">=3.13"
 dependencies = [
     "django-ninja>=1.3.0",
+    "django-stubs>=5.1.3",
     "django>=5.1.6",
-    "pytest-django>=4.9.0",
     "python-dotenv>=1.0.1",
 ]
 
@@ -28,11 +28,11 @@ include = ["/src"]
 [dependency-groups]
 dev = [
     "pytest-cov>=6.0.0",
+    "pytest-django>=4.9.0",
     "pytest>=8.3.4",
     "ruff>=0.9.5",
     "pre-commit>=4.1.0",
     "pyright>=1.1.393",
-    "django-stubs>=5.1.3",
 ]
 
 [tool.ruff]
@@ -59,6 +59,9 @@ select = [
 ]
 ignore = ["RUF012"]
 
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
 [tool.ruff.lint.isort]
 force-single-line = true
 known-first-party = ["insurance_market"]
@@ -72,9 +75,12 @@ section-order = [
 combine-as-imports = false
 
 [tool.pyright]
-pythonVersion = "3.13"
 reportUnnecessaryTypeIgnoreComment = true
+reportUnusedImport = true
+reportUnusedVariable = true
+
+[tool.django-stubs]
+django_settings_module = "project.settings"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "project.settings"
-pythonpath = "src"
