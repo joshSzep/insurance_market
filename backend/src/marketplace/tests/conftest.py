@@ -2,7 +2,6 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
-from django.utils import timezone
 
 from marketplace.models.bid import Bid
 from marketplace.models.quote import Quote
