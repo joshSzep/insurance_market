@@ -1,3 +1,4 @@
+from datetime import timedelta
 from enum import Enum
 
 from django.db import models
@@ -59,13 +60,13 @@ class Bid(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f"Bid {self.id} - {self.carrier_name} - ${self.amount} - {self.status}"
+        return f"Bid {self.pk} - {self.carrier_name} - ${self.amount} - {self.status}"
 
     def select(self) -> None:
         """Mark this bid as selected by the consumer."""
         self.status = BidStatus.PENDING_CONFIRMATION.value
         self.selected_at = timezone.now()
-        self.confirmation_deadline = self.selected_at + timezone.timedelta(seconds=30)
+        self.confirmation_deadline = self.selected_at + timedelta(seconds=30)
         self.save()
 
     def confirm(self) -> None:

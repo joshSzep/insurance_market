@@ -59,6 +59,9 @@ select = [
 ]
 ignore = ["RUF012"]
 
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
 [tool.ruff.lint.isort]
 force-single-line = true
 known-first-party = ["insurance_market"]
@@ -72,9 +75,12 @@ section-order = [
 combine-as-imports = false
 
 [tool.pyright]
-pythonVersion = "3.13"
 reportUnnecessaryTypeIgnoreComment = true
+reportUnusedImport = true
+reportUnusedVariable = true
+
+[tool.django-stubs]
+django_settings_module = "project.settings"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "project.settings"
-pythonpath = "src"

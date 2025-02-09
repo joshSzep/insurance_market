@@ -1,3 +1,4 @@
+from datetime import timedelta
 from enum import Enum
 
 from django.db import models
@@ -70,13 +71,13 @@ class Quote(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f"Quote {self.id} - {self.consumer_name} - {self.status}"
+        return f"Quote {self.pk} - {self.consumer_name} - {self.status}"
 
     def start_bidding(self) -> None:
         """Start the bidding period for this quote."""
         self.status = QuoteStatus.BIDDING.value
         self.bidding_start = timezone.now()
-        self.bidding_end = self.bidding_start + timezone.timedelta(seconds=60)
+        self.bidding_end = self.bidding_start + timedelta(seconds=60)
         self.save()
 
     def can_retry(self) -> bool:
