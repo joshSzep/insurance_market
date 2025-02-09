@@ -40,3 +40,15 @@ Next.js frontend application for the real-time insurance bidding platform.
 - Bid history tracking
 - Session timers
 - User authentication state
+
+## Getting Started
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
