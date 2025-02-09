@@ -1,7 +1,6 @@
 from decimal import Decimal
 
 import pytest
-from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.utils import timezone
 

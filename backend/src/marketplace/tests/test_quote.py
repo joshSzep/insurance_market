@@ -1,4 +1,3 @@
-from datetime import date
 from decimal import Decimal
 
 import pytest
@@ -22,11 +21,11 @@ def test_quote_creation(sample_quote: Quote) -> None:
 def test_start_bidding(sample_quote: Quote) -> None:
     """Test starting the bidding process."""
     sample_quote.start_bidding()
-    
+
     assert sample_quote.status == QuoteStatus.BIDDING.value
     assert sample_quote.bidding_start is not None
     assert sample_quote.bidding_end is not None
-    
+
     # Check 60 second window
     time_diff = sample_quote.bidding_end - sample_quote.bidding_start
     assert time_diff.total_seconds() == 60
@@ -44,10 +43,10 @@ def test_can_retry_after_one_hour(sample_quote: Quote) -> None:
     # Create first retry
     retry = sample_quote.create_retry()
     assert retry.retry_count == 1
-    
+
     # Should not be able to retry immediately
     assert retry.can_retry() is False
-    
+
     # Move time forward one hour
     retry.last_retry_at = timezone.now() - timezone.timedelta(hours=1, minutes=1)
     assert retry.can_retry() is False  # Still false because retry_count >= 1
@@ -57,7 +56,7 @@ def test_can_retry_after_one_hour(sample_quote: Quote) -> None:
 def test_create_retry_preserves_data(sample_quote: Quote) -> None:
     """Test that retry preserves original quote data."""
     retry = sample_quote.create_retry()
-    
+
     assert retry.id != sample_quote.id
     assert retry.consumer_name == sample_quote.consumer_name
     assert retry.consumer_email == sample_quote.consumer_email
@@ -72,7 +71,7 @@ def test_create_retry_fails_when_not_allowed(sample_quote: Quote) -> None:
     """Test that retry fails when not allowed."""
     # Create first retry
     retry = sample_quote.create_retry()
-    
+
     # Attempt second retry
     with pytest.raises(ValueError, match="Cannot retry this quote"):
         retry.create_retry()
@@ -83,6 +82,6 @@ def test_quote_with_selected_bid(sample_quote: Quote, sample_bid) -> None:
     """Test quote with a selected bid."""
     sample_quote.selected_bid = sample_bid
     sample_quote.save()
-    
+
     assert sample_quote.selected_bid.carrier_name == "Best Insurance Co"
     assert sample_quote.selected_bid.amount == Decimal("1000.00")
