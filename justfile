@@ -4,7 +4,7 @@ default:
 
 # Install backend dependencies using uv
 install-backend:
-    cd backend && uv pip sync --all-extras --all-groups --all-packages --upgrade
+    cd backend && uv sync --all-extras --all-groups --all-packages --upgrade
 
 # Install frontend dependencies
 install-frontend:
