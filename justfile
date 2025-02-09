@@ -102,3 +102,7 @@ clean: clean-backend clean-frontend
 
 # Check all (format, lint, typecheck, test)
 check: fmt lint typecheck test
+
+# Run pre-commit hooks on all files
+pre-commit:
+    cd backend && uv run pre-commit run --all-files
