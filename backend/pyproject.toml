@@ -77,7 +77,6 @@ section-order = [
 combine-as-imports = false
 
 [tool.pyright]
-reportUnnecessaryTypeIgnoreComment = true
 reportUnusedImport = true
 reportUnusedVariable = true
 stubPath = "stubs"
