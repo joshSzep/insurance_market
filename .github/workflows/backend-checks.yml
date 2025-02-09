@@ -35,7 +35,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd backend
           uv pip install --system -e ".[dev]"
 
       - name: Ruff Format
