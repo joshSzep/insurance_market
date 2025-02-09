@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/asgi/
 
 import os
 
-from channels.routing import ProtocolTypeRouter
-from channels.routing import URLRouter
+from channels.routing import ProtocolTypeRouter  # type: ignore
+from channels.routing import URLRouter  # type: ignore
 from django.core.asgi import get_asgi_application
 
 from marketplace.routing import websocket_urlpatterns

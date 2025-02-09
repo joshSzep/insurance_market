@@ -1,7 +1,7 @@
-import asyncio
 from typing import Any
 
-from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer  # type: ignore
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -49,10 +49,9 @@ async def send_bid_update(bid: Bid) -> None:
 def handle_quote_update(
     sender: type[Quote],
     instance: Quote,
-    created: bool,
     **kwargs: Any,
 ) -> None:
-    """Handle quote status updates and notify WebSocket clients."""
+    """Handle quote updates by sending WebSocket messages."""
     # Prepare status message based on quote state
     message = "Quote status updated"
     match instance.status:
@@ -70,12 +69,10 @@ def handle_quote_update(
             message = "Selected carrier failed to confirm"
 
     # Schedule async task to send update
-    asyncio.create_task(
-        send_quote_update(
-            quote_id=instance.pk,
-            status=instance.status,
-            message=message,
-        ),
+    async_to_sync(send_quote_update)(
+        quote_id=instance.pk,
+        status=instance.status,
+        message=message,
     )
 
 
@@ -83,9 +80,8 @@ def handle_quote_update(
 def handle_bid_update(
     sender: type[Bid],
     instance: Bid,
-    created: bool,
     **kwargs: Any,
 ) -> None:
-    """Handle bid updates and notify WebSocket clients."""
+    """Handle bid updates by sending WebSocket messages."""
     # Schedule async task to send update
-    asyncio.create_task(send_bid_update(instance))
+    async_to_sync(send_bid_update)(instance)

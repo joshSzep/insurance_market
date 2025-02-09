@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Any
 
-from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer  # type: ignore
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import QuerySet
 
