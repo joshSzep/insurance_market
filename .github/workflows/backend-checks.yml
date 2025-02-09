@@ -35,13 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv pip install --system -e ".[dev]"
-
-      - name: Initialize Django Stubs
-        run: |
-          PYTHONPATH=src uv run python -c "import django; django.setup(); import django_stubs_ext; django_stubs_ext.monkeypatch()"
-        env:
-          DJANGO_SETTINGS_MODULE: project.settings
+          uv pip install -e ".[dev]"
 
       - name: Ruff Format
         run: uv run ruff format --check .
