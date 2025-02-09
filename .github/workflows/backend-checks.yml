@@ -50,4 +50,3 @@ jobs:
         run: uv run pytest test
         env:
           DJANGO_SETTINGS_MODULE: project.settings
-          PYTHONPATH: src
