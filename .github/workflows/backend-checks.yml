@@ -39,7 +39,7 @@ jobs:
 
       - name: Initialize Django Stubs
         run: |
-          PYTHONPATH=src python -c "import django; django.setup(); import django_stubs_ext; django_stubs_ext.monkeypatch()"
+          PYTHONPATH=src uv run python -c "import django; django.setup(); import django_stubs_ext; django_stubs_ext.monkeypatch()"
         env:
           DJANGO_SETTINGS_MODULE: project.settings
 
