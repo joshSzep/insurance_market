@@ -3,7 +3,6 @@
 from typing import Any
 from typing import Protocol
 
-
 class ChannelLayer(Protocol):
     """Protocol for channel layer implementations."""
 

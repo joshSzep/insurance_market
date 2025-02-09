@@ -40,7 +40,9 @@ class QuoteBiddingConsumer(AsyncJsonWebsocketConsumer):
         # Send initial quote state
         try:
             quote: Quote = await Quote.objects.aget(pk=self.quote_id)
-            bids: QuerySet[Bid] = Bid.objects.filter(quote_id=self.quote_id).order_by("amount")
+            bids: QuerySet[Bid] = Bid.objects.filter(quote_id=self.quote_id).order_by(
+                "amount"
+            )
             bid_list: list[Bid] = [bid async for bid in bids]
             await self.send_quote_state(quote, bid_list)
         except ObjectDoesNotExist:
