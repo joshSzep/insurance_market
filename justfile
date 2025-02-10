@@ -48,7 +48,7 @@ typecheck: typecheck-backend typecheck-frontend
 
 # Run backend tests
 test-backend:
-    cd backend && uv run pytest
+    cd backend && uv run pytest --cov=insurance_market --cov-report=term-missing test
 
 # Run frontend tests
 test-frontend:
@@ -56,10 +56,6 @@ test-frontend:
 
 # Run all tests
 test: test-backend test-frontend
-
-# Run backend tests with coverage
-test-backend-cov:
-    cd backend && uv run pytest --cov=insurance_market --cov-report=term-missing .
 
 # Run Django development server
 serve-backend:
